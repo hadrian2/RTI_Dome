@@ -197,11 +197,11 @@ navigator.usb.requestDevice({ filters: [{ vendorId: 0x2341 }] })
 * I found a [great resource](https://www.geeksforgeeks.org/tkinter-application-to-switch-between-different-page-frames/) on how to create a GUI with multiple pages in Tkinter
 * I took this sample code and adapted it to work with our project, and was able to create a skeleton of the GUI
 
-![Image](https://github.com/hadrian2/RTI_Dome/blob/main/Design_Images_and_Code_Sippets/GUI_Home_Skeleton.JPG)
+![Image](https://github.com/hadrian2/RTI_Dome/blob/main/Design_Images_and_Code_Sippets/GUI_Home_Skeleton.png)
 
-![Image](https://github.com/hadrian2/RTI_Dome/blob/main/Design_Images_and_Code_Sippets/GUI_Auto_Skeleton.JPG)
+![Image](https://github.com/hadrian2/RTI_Dome/blob/main/Design_Images_and_Code_Sippets/GUI_Auto_Skeleton.png)
 
-![Image](https://github.com/hadrian2/RTI_Dome/blob/main/Design_Images_and_Code_Sippets/GUI_Manual_Skeleton.JPG)
+![Image](https://github.com/hadrian2/RTI_Dome/blob/main/Design_Images_and_Code_Sippets/GUI_Manual_Skeleton.png)
 
 
 ## 11/9/2021: LED Driver testing
@@ -245,6 +245,7 @@ navigator.usb.requestDevice({ filters: [{ vendorId: 0x2341 }] })
   ![Image](https://github.com/hadrian2/RTI_Dome/blob/main/Design_Images_and_Code_Sippets/LED_Test_set2.png)
   
 * LED now lights up with my code!
+* Started implementation of Automatic Imaging and Manual Imaging functions for a single driver
 * Continued messing with the LED driver, and I think I broke it...
 * To add insult to injury, when trying to solder on a new driver to the breakout board, I ripped one of the traces of the board...
 * Still happy with today's results though.
@@ -257,21 +258,66 @@ navigator.usb.requestDevice({ filters: [{ vendorId: 0x2341 }] })
 ![Image](https://github.com/hadrian2/RTI_Dome/blob/main/Design_Images_and_Code_Sippets/PCB_Layout_4.png)
 
 * Still need to figure out uploading code our micro through USB. Keep getting the error: “selected serial port does not exist or your board is not connected”
+* Started implementation of Automatic Imaging and Manual Imaging functions
 
+## 11/19/2021: New PCB Arrived!
 ## 11/19/2021: Microcontroller troubleshooting
 * Still can't get the micro programmed through USB.
 * After searching all over the internet for a solution, we found a random [reddit user's post](https://www.reddit.com/r/arduino/comments/drkoom/solved_atmega32u4_forcing_reset_using_1200bps/) that was having the same problem as us, who found this solution of installing the Arduino Micro bootloader instead of the Leonardo bootloader we had been using. It worked lol.
 
-## 11/22/2021 - 11/29/2021: Spring Break
+## 11/22/2021 - 11/27/2021: Thanksgiving Break
+* Adapted Arduino code to match pin assingments for ATmega
+* Updated Automatic Imaging and Manual Imaging functions to accommodate all 4 drivers
+
+![Image](https://github.com/hadrian2/RTI_Dome/blob/main/Design_Images_and_Code_Sippets/Auto_Imaging.png)
+
+![Image](https://github.com/hadrian2/RTI_Dome/blob/main/Design_Images_and_Code_Sippets/Manual_Imaging.png)
+
+* Worked on the actual functionality of the GUI. Using Pyserial to establish a serial connection and searching through the COM ports for chip's vendor ID. Firmware will look for serial input of "A" to run automatic imaging, and "Mx" for manual, where x is an integer 0-31.
+  * Pyserial search:
+    * import serial.tools.list_ports as st
+      plist = list(st.comports())
+      port = None
+      for i in plist:
+        if i.vid == 9025:
+          port = i.device
+          device = "Connected!"
+
+      if port == None:
+      device = "Not Found :("
+
+      cereal = ser.Serial(port, 9600, timeout=1)
+
+  * Firmware main loop:
 
 
+![Image](https://github.com/hadrian2/RTI_Dome/blob/main/Design_Images_and_Code_Sippets/ATmega_loop.png)
 
+  * Issues sending the correct number for manual imaging serial command. Since each button in the manual imaging grid is being created in the same nested for loop, whenever we update the number variable, it changes the sent number for all buttons. All buttons send "M31".
+  * Created a helper function "makeButton" which makes a button using the desired number as an input, so a unique button with a unique command is created every iteration of the for loop
 
+## 11/28/2021: More PCB Problems...
+* Testing the code on our new PCB, but its not doing anything :(
+* We decided to check each signal coming out of our micro using an oscilloscope to see if everything was behaving correctly.
+  * Found that GCLK was not producing the PWM signal we expected.
+  * After looking at ATmega pinouts, we found that the pin assigned to GCLK on our board didn't have PWM capability...
+  * Solved this by scratching out the GCLK trace and rerouting it to a test point on the board that DID have PWM capability.
+* IT WORKS!
 
+## 11/29/2021: Faulty Lighting and Wire Braiding
+* Testing our code and PCB with the actual dome, but it doesn't seem to work with the LED's on the dome even though it works fine with our test LED.
+* Found out our problem was because Jack sucks at crimping. LED's functioned correctly when tested with correct crimping.
+* Started the tedious task of braiding all the LED wires and crimping them.
 
+## 11/30/2021: D-Day
+* About half of our dome's LEDs were crimped by the time demo came around. 
+* Murphy's Law in full effect as we tried changing the code to trigger our camera, but the upload messed with our serial connection, so the dome didn't work on the first try during the demo
+* After some tinkering, we reinstalled the bootloader, uploaded the previous code and the dome worked!
 
-  
-
+## Further work:
+* We finished up wiring the dome, ziptied the wires to make it look a little nicer, reuploaded the code to trigger the camera, and I figured out how to package our application into a single executable using PyInstaller, an app packaging package.
+* We delivered our completed project to the Spurlock Museum and it worked NEARLY perfectly on the first try.
+* After tweaking some timings to match up with the speed of their camera, we were able to successfully imaage all 32 lighting angles and were left with a satisfied customer. EZ money.
 
 
 
