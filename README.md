@@ -107,9 +107,150 @@
 ## 10/6/2021: Final PCB Revisions
 * Dotted i's and crossed t's on tha schematic and PCB layout. Ready to order (hopefully)
 
-![Image](https://github.com/hadrian2/RTI_Dome/blob/main/Schematic_3.png
+![Image](https://github.com/hadrian2/RTI_Dome/blob/main/Schematic_3.png)
 
-![Image](https://github.com/hadrian2/RTI_Dome/blob/main/PCB_Layout_3.png
+![Image](https://github.com/hadrian2/RTI_Dome/blob/main/PCB_Layout_3.png)
+
+## 10/7/2021: Submitted our PCB Design!
+
+## 10/8/2021: General Group Meeting
+* Talked about next steps
+* Set a tentative to do list
+* I plan to have a software flowchart and GUI sketch by next week
+
+## 10/12/2021: Parts came in!
+* Jack finalized a physical dome design
+
+![Image](https://github.com/hadrian2/RTI_Dome/blob/main/Dome_Design.png)
+
+## 10/13/2021: Looked into possible GUI frameworks
+* Intend to use Python. Currently considering:
+  * Kivy
+  * Tkinter
+  * PyQt maybe?
+* Created tentative software flowchart
+
+[Flowchart](https://github.com/hadrian2/RTI_Dome/blob/main/RTI_Dome_Flowchart.pdf)
+
+## 10/16/2021: Working on GUI
+* Rough Sketch of GUI
+
+![Image](https://github.com/hadrian2/RTI_Dome/blob/main/GUI_Rough_Sketch.JPG)
+
+* Tried getting started with Kivy, but wouldn't install on my virtual environment
+* Ended up having to install Spyder IDE which worked 
+* Began playing around in Kivy to learn how to make a nice GUI. Was able to get a basic layout of the Home page.
+
+![Image](https://github.com/hadrian2/RTI_Dome/blob/main/Kivy_GUI_Homepage.png)
+
+## 10/18/2021: Dome Construction has begun!
+
+## 10/19/2021: PCB arrived + GUI considerations
+* Evan suggested using WebUSB to create a webapp instead of a desktop application
+* I like this idea more than Kivy because if I had so much trouble installing the library, it could surely happen to our sponsor too
+* Began researching [WebUSB](https://wicg.github.io/webusb/)
+
+## 10/22/2021: More WebUSB Research
+* Important functions:
+  * navigator.usb.requestDevice()
+    * Prompts user to select a connected USB device
+    * Use this to select our PCB and allow us to send data back and forth
+  * navigator.usb.getDevices()
+    * Gets a list of all connected USB devices
+    * Could be an alternative to select our PCB, searching through the list using specific vendor ID
+    * Makes things easier for the user (they don't have to select the device themselves)
+* Sample code (Connecting to an Arduino):
+
+navigator.usb.requestDevice({ filters: [{ vendorId: 0x2341 }] })
+.then(device => {
+  console.log(device.productName);      // "Arduino Micro"
+  console.log(device.manufacturerName); // "Arduino LLC"
+})
+.catch(error => { console.error(error); });
+
+* After that, seems to be just simple serial communication
+* Gotta learn JavaScript and HTML unfortunately. Started looking into the basics of both
+
+## 10/26/2021: Board Assembly and testing
+* We soldered on essential parts (Drivers, Power, Micro) onto our board
+* Supplied power to the board, but nothing's happening
+  * LED turns on sometimes, but it's not supposed to, as the micro isn't programmed
+    * Current guess is this is because the values of the micro are currently floating, so they could be high or low.
+    * Maybe board is shorted?
+
+## 10/29/2021: Board Assembly and testing (cont.)
+* Board seems to be shorted somewhere. The LEDs are drawing current from the drivers when they shouldn't be. The drivers' registers haven't been set, so they shouldn't be allowing any current draw under normal functioning conditions.
+* Arduino IDE can't find the micro. We think the board is shorted within the LED driver section of the PCB.
+* Scratched off 5V trace on our board, separating the LED drivers to isolate our micro to see if we could program it that way. No dice.
+
+## 11/2/2021: More GUI Considerations
+* Evan suggested we ditch WebUSB and stick with Python, using the built in framework TKinter.
+* I like this suggestion because I don't have to worry about dealing with JavaScript and HTML.
+
+## 11/4/2021: Board Assembly and testing (cont.)
+* Decided to resolder a new micro and a couple of LED drivers onto a new board. Now the LED is consistently on when given power. Now we are assuming this is due to incorrect PCB layout. 
+* While this board issue is being resolved, I plan to use an Arduino to unit test an LED driver to see if I can figure out how to get it functioning properly.
+
+## 11/4/2021: Dome Construction Finished!
+
+## 11/9/2021: LED Driver testing
+* Evan provided us with a breakout board for our LED driver so I could test with an Arduino on a breadboard. God bless you Evan.
+* Found an Arduino library for controlling our specific driver. Trying to get an LED to light up using this driver using [this](https://playground.arduino.cc/Learning/TLC5940/) reference.
+* Tried using given library functions to turn on and off LEDs to no avail. Referring back to the [TLC5940 Datasheet](https://www.ti.com/product/TLC5940?utm_source=google&utm_medium=cpc&utm_campaign=app-led-null-prodfolderdynamic-cpc-pf-google-wwe&utm_content=prodfolddynamic&ds_k=DYNAMIC+SEARCH+ADS&DCM=yes&gclid=CjwKCAiA78aNBhAlEiwA7B76p3s54ISAGRmD_Q9z8pcWMUK1mUTM8qzrQvB5o3cjqEsktUIdCyhSQRoC2y8QAvD_BwE&gclsrc=aw.ds) to see if I can get the driver working using my own code. 
+* Necessary signals (i think):
+  * TLC5940 clocks in 192 bits of lighting data from SIN using SClk.
+  * BLANK, when high, closes outputs, preventing all LEDs from turning on.
+  * XLAT is what actually sets the data after it's clocked in
+* Still can't get the driver working with my own code.
+  * Initialize signals (All are digital):
+  
+  ![Image](https://github.com/hadrian2/RTI_Dome/blob/main/LED_Test_init.png)
+  
+  * Function to clock in bits from SIN:
+
+  ![Image](https://github.com/hadrian2/RTI_Dome/blob/main/LED_Test_clock.png)
+
+  * Function to set bits after being clocked in:
+
+  ![Image](https://github.com/hadrian2/RTI_Dome/blob/main/LED_Test_set.png)
+
+* Guessing that I busted the chip at some point because after 4 hours I genuinely don't know what else could be wrong. Calling it a night.
+
+## 11/11/2021: LED Driver testing (cont.)
+* Trying to test on a new driver using the TLC5940 library.
+* IT WORKS
+* Now trying to get it working using my own code, so we can further customize how exactly we want to control our LEDs
+* Not working on code from Tuesday 9th. Looking into the datasheet some more.
+* After looking at the timing chart more closely I learned some things:
+  
+  ![Image](https://github.com/hadrian2/RTI_Dome/blob/main/TLC5940_Timing.png)
+  
+  * Seems like XLAT should be triggered inside of a high BLANK signal.
+  * GSClk looks like I can just have it running at all times.
+
+* With this in considerations, I modified the set() function and changed GSClk to an analog signal with 50% PWM duty cycle.
+  
+  ![Image](https://github.com/hadrian2/RTI_Dome/blob/main/LED_Test_set2.png)
+  
+* LED now lights up with my code!
+* Continued messing with the LED driver, and I think I broke it...
+* To add insult to injury, when trying to solder on a new driver to the breakout board, I ripped one of the traces of the board...
+* Still happy with today's results though.
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
 
 
 
