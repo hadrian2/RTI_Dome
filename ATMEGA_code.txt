@@ -1,0 +1,253 @@
+
+void setup() {
+  pinMode(LED_BUILTIN_TX, OUTPUT);  // BLANK
+  digitalWrite(LED_BUILTIN_TX, HIGH);
+  pinMode(A4, OUTPUT);
+  pinMode(5, INPUT);
+  pinMode(9, OUTPUT); // CLK
+  pinMode(1, OUTPUT); // SIN1
+  pinMode(3, OUTPUT); // SIN2
+  pinMode(2, OUTPUT); // SIN3
+  pinMode(0, OUTPUT); // SIN4
+  pinMode(4, OUTPUT); // XLAT
+  pinMode(13, OUTPUT); //GCLK
+  digitalWrite(A4, LOW);
+  digitalWrite(9, LOW);
+  digitalWrite(1, LOW);
+  digitalWrite(3, LOW);
+  digitalWrite(2, LOW);
+  digitalWrite(0, LOW);
+  
+  digitalWrite(4, LOW);
+  analogWrite(13, 127);
+  Serial.begin(9600); 
+  
+}
+int Drivers[] = {1,3,2,0};
+    
+void loop() {
+  while(!Serial.available()){} //Wait for serial to be available
+  char data = Serial.read();  // Read a letter (A or M) for automatic or manual (sent by button press on GUI)
+  int num = Serial.parseInt(); //Read a number 0-31 (Only for Manual)
+  if (data == 'A'){
+    digitalWrite(LED_BUILTIN_TX, LOW);
+    clearReg();
+    AutoImage();
+  }
+  if (data == 'M'){
+    digitalWrite(LED_BUILTIN_TX, LOW);
+    clearReg();
+    ManualImage(num);
+  }
+  data = '0'; // reset variables 
+  num = -1;
+}
+void set(){     //Function to raise blank and then latch to set the bits and turn on designated LED.
+  //digitalWrite(LED_BUILTIN_TX, HIGH);
+  digitalWrite(LED_BUILTIN_TX, HIGH);
+  digitalWrite(4, HIGH);
+  digitalWrite(4, LOW);
+  //digitalWrite(LED_BUILTIN_TX, LOW);
+  digitalWrite(LED_BUILTIN_TX, LOW);
+}
+void sClk(int cycles){
+  for (int k = 0 ; k < cycles ; k++) {
+    digitalWrite(9, HIGH);
+    digitalWrite(9, LOW);
+    }
+}
+void ClockBits1(int driver){
+  digitalWrite(LED_BUILTIN_TX, LOW);
+  digitalWrite(driver, HIGH);
+  sClk(24);
+  digitalWrite(driver,LOW);
+  sClk(168);
+}
+void ClockBits2(int driver){
+  digitalWrite(LED_BUILTIN_TX, LOW);
+  sClk(24);
+  digitalWrite(driver, HIGH);
+  sClk(24);
+  digitalWrite(driver,LOW);
+  sClk(144);
+}
+void ClockBits3(int driver){
+  digitalWrite(LED_BUILTIN_TX, LOW);
+  sClk(48);
+  digitalWrite(driver, HIGH);
+  sClk(24);
+  digitalWrite(driver,LOW);
+  sClk(120);
+}
+void ClockBits4(int driver){
+  digitalWrite(LED_BUILTIN_TX, LOW);
+  sClk(72);
+  digitalWrite(driver, HIGH);
+  sClk(24);
+  digitalWrite(driver,LOW);
+  sClk(96);
+}
+void ClockBits5(int driver){
+  digitalWrite(LED_BUILTIN_TX, LOW);
+  sClk(96);
+  digitalWrite(driver, HIGH);
+  sClk(24);
+  digitalWrite(driver,LOW);
+  sClk(72);
+}
+void ClockBits6(int driver){
+  digitalWrite(LED_BUILTIN_TX, LOW);
+  sClk(120);
+  digitalWrite(driver, HIGH);
+  sClk(24);
+  digitalWrite(driver,LOW);
+  sClk(48);
+}
+void ClockBits7(int driver){
+  digitalWrite(LED_BUILTIN_TX, LOW);
+  sClk(144);
+  digitalWrite(driver, HIGH);
+  sClk(24);
+  digitalWrite(driver,LOW);
+  sClk(24);
+}
+void ClockBits8(int driver){
+  digitalWrite(LED_BUILTIN_TX, LOW);
+  sClk(168);
+  digitalWrite(driver, HIGH);
+  sClk(24);
+  digitalWrite(driver,LOW);
+}
+void Trigger(){
+  delay(300);
+  digitalWrite(A4, HIGH);
+  delay(100);
+  digitalWrite(A4, LOW);
+  delay(300); 
+}
+void ManualImage(int number){ //Function run when a button is clicked on the Manual Imaging screen
+  int driverSelect;
+  driverSelect = number/8; //Take the floor of number to determine which driver to use
+  for (int i = 0; i<8 ; i++){
+      switch(driverSelect){
+        case 0: //driver 0
+          if (number%8 == i) {
+            digitalWrite(1, HIGH);
+          }
+          else {
+           digitalWrite(1, LOW);
+          }
+          break;
+        case 1:  //driver 1
+          if (number%8 == i) {
+            digitalWrite(3, HIGH);
+
+          }
+          else { 
+            digitalWrite(3, LOW);
+          }
+          break;
+        case 2: // driver 2
+          if (number%8 == i) {
+            digitalWrite(2, HIGH);
+          }
+          else {
+            digitalWrite(2, LOW);
+          }
+          break;
+        case 3: // driver 3
+          if (number%8 == i) {
+            digitalWrite(0, HIGH);
+          }
+          else {
+            digitalWrite(0, LOW);
+          }
+          break;
+         }
+      sClk(24);
+      digitalWrite(1, LOW);     
+      digitalWrite(3, LOW);     
+      digitalWrite(2, LOW);     
+      digitalWrite(0, LOW);  
+      }
+      set();
+      delay(100);
+      digitalWrite(A4, HIGH);
+      delay(100);
+      digitalWrite(A4, LOW);
+      delay(100); 
+      digitalWrite(LED_BUILTIN_TX, HIGH);   
+  }
+void clearReg() {
+  digitalWrite(1, LOW);     
+  digitalWrite(3, LOW);     
+  digitalWrite(2, LOW);     
+  digitalWrite(0, LOW);
+  for (int i = 0 ; i<192 ; i++){
+    digitalWrite(9, HIGH);
+    digitalWrite(9, LOW); 
+  }
+  set();
+  
+}
+void AutoImage() { //Function run when a button is clicked on the Automatic Imaging screen
+  int driverSelect;
+  int count;
+  ClockBits1(Drivers[0]);
+  set();
+  Trigger();
+  digitalWrite(LED_BUILTIN_TX, HIGH);
+  for (int i = 0 ; i < 4 ; i++) {         
+    switch(i){
+        case 0:
+        for (int j = 0 ; j < 4 ; j++){
+          ClockBits1(Drivers[j]);
+          set();
+          Trigger();
+          digitalWrite(LED_BUILTIN_TX, HIGH);
+          ClockBits5(Drivers[j]);
+          set();
+          Trigger();      
+          digitalWrite(LED_BUILTIN_TX, HIGH); 
+        }          
+          break;
+        case 1: 
+        for (int j = 0 ; j < 4 ; j++){
+          ClockBits2(Drivers[j]);
+          set();
+          Trigger();
+          digitalWrite(LED_BUILTIN_TX, HIGH);
+          ClockBits6(Drivers[j]);
+          set();
+          Trigger();      
+          digitalWrite(LED_BUILTIN_TX, HIGH);
+        }
+          break;
+        case 2:
+        for (int j = 0 ; j < 4 ; j++){
+          ClockBits3(Drivers[j]);
+          set();
+          Trigger();
+          digitalWrite(LED_BUILTIN_TX, HIGH);
+          ClockBits7(Drivers[j]);
+          set();
+          Trigger();      
+          digitalWrite(LED_BUILTIN_TX, HIGH);
+        }
+          break;
+        case 3:
+        for (int j = 0 ; j < 4 ; j++){
+          ClockBits4(Drivers[j]);
+          set();
+          Trigger();
+          digitalWrite(LED_BUILTIN_TX, HIGH);
+          ClockBits8(Drivers[j]);
+          set();
+          Trigger();      
+          digitalWrite(LED_BUILTIN_TX, HIGH);
+        }
+          break;
+          
+        }
+      }  
+    }
