@@ -18,11 +18,11 @@
 * Sketched out rough umbrella design
 
 
-  ![Image](https://github.com/hadrian2/RTI_Dome/blob/main/Umbrella_Sketch.jpg)
+  ![Image](https://github.com/hadrian2/RTI_Dome/blob/main/Design_Images_and_Code_Sippets/Umbrella_Sketch.jpg)
 * Sketched out rough block diagram
 
 
-  ![Image](https://github.com/hadrian2/RTI_Dome/blob/main/First_Block_Sketch.jpg)
+  ![Image](https://github.com/hadrian2/RTI_Dome/blob/main/Design_Images_and_Code_Sippets/First_Block_Sketch.jpg)
   
 ## 9/16/2021: Proposal Write-up
 * Met with group over Discord while they met in person
@@ -46,7 +46,7 @@
 * Going with [ATmega48A](https://ww1.microchip.com/downloads/en/DeviceDoc/ATmega48A-PA-88A-PA-168A-PA-328-P-DS-DS40002061B.pdf) microcontroller for now.
 * Alex began designing schematic
 
-![Image](https://github.com/hadrian2/RTI_Dome/blob/main/First_Schematic.png)
+![Image](https://github.com/hadrian2/RTI_Dome/blob/main/Design_Images_and_Code_Sippets/First_Schematic.png)
 
 ## 9/26/2021: Continued Parts Research and Schematic Design
 * Looked through multiple LED drivers and settled on [this](https://www.st.com/resource/en/datasheet/led5000.pdf) one for now
@@ -58,7 +58,7 @@
 * Alex updated our schematic with new parts, Evan recommended [TLC5940 LED driver](https://www.ti.com/product/TLC5940) instead of led5000
 * Jack working on Autocad designs for the dome
 
-![Image](https://github.com/hadrian2/RTI_Dome/blob/main/Schematic_2.png)
+![Image](https://github.com/hadrian2/RTI_Dome/blob/main/Design_Images_and_Code_Sippets/Schematic_2.png)
 
 * Decided on these [new LED bulbs](https://www.ledtronics.com/Clearance/?p=MR11-30-TPW-012AM) with lower current draw to make things easier for us
 * Think we're ready to order parts!
@@ -85,7 +85,7 @@
 * Looked into an [optoisolator](https://www.digikey.com/en/products/detail/vishay-semiconductor-opto-division/4N35/1738522) for our camera trigger
 * Alex and I continued working on the PCB layout with all of our new parts 
 
-![Image](https://github.com/hadrian2/RTI_Dome/blob/main/PCB_Layout_1.png)
+![Image](https://github.com/hadrian2/RTI_Dome/blob/main/Design_Images_and_Code_Sippets/PCB_Layout_1.png)
 * Completed the Design Doc
 
 ## 10/2/2021: Oops
@@ -97,9 +97,9 @@
 * Looked into the new Micro datasheet to see what she could do
 * Schematic and Board updates
 
-![Image](https://github.com/hadrian2/RTI_Dome/blob/main/Schematic_Rework.png)
+![Image](https://github.com/hadrian2/RTI_Dome/blob/main/Design_Images_and_Code_Sippets/Schematic_Rework.png)
 
-![Image](https://github.com/hadrian2/RTI_Dome/blob/main/PCB_Layout_2.png)
+![Image](https://github.com/hadrian2/RTI_Dome/blob/main/Design_Images_and_Code_Sippets/PCB_Layout_2.png)
 
 ## 10/5/2021: Design Review
 * Updated R/V Table
@@ -107,9 +107,9 @@
 ## 10/6/2021: Final PCB Revisions
 * Dotted i's and crossed t's on tha schematic and PCB layout. Ready to order (hopefully)
 
-![Image](https://github.com/hadrian2/RTI_Dome/blob/main/Schematic_3.png)
+![Image](https://github.com/hadrian2/RTI_Dome/blob/main/Design_Images_and_Code_Sippets/Schematic_3.png)
 
-![Image](https://github.com/hadrian2/RTI_Dome/blob/main/PCB_Layout_3.png)
+![Image](https://github.com/hadrian2/RTI_Dome/blob/main/Design_Images_and_Code_Sippets/PCB_Layout_3.png)
 
 ## 10/7/2021: Submitted our PCB Design!
 
@@ -121,7 +121,7 @@
 ## 10/12/2021: Parts came in!
 * Jack finalized a physical dome design
 
-![Image](https://github.com/hadrian2/RTI_Dome/blob/main/Dome_Design.png)
+![Image](https://github.com/hadrian2/RTI_Dome/blob/main/Design_Images_and_Code_Sippets/Dome_Design.png)
 
 ## 10/13/2021: Looked into possible GUI frameworks
 * Intend to use Python. Currently considering:
@@ -130,18 +130,18 @@
   * PyQt maybe?
 * Created tentative software flowchart
 
-[Flowchart](https://github.com/hadrian2/RTI_Dome/blob/main/RTI_Dome_Flowchart.pdf)
+[Flowchart](https://github.com/hadrian2/RTI_Dome/blob/main/Design_Images_and_Code_Sippets/RTI_Dome_Flowchart.pdf)
 
 ## 10/16/2021: Working on GUI
 * Rough Sketch of GUI
 
-![Image](https://github.com/hadrian2/RTI_Dome/blob/main/GUI_Rough_Sketch.JPG)
+![Image](https://github.com/hadrian2/RTI_Dome/blob/main/Design_Images_and_Code_Sippets/GUI_Rough_Sketch.JPG)
 
 * Tried getting started with Kivy, but wouldn't install on my virtual environment
 * Ended up having to install Spyder IDE which worked 
 * Began playing around in Kivy to learn how to make a nice GUI. Was able to get a basic layout of the Home page.
 
-![Image](https://github.com/hadrian2/RTI_Dome/blob/main/Kivy_GUI_Homepage.png)
+![Image](https://github.com/hadrian2/RTI_Dome/blob/main/Design_Images_and_Code_Sippets/Kivy_GUI_Homepage.png)
 
 ## 10/18/2021: Dome Construction has begun!
 
@@ -209,15 +209,15 @@ navigator.usb.requestDevice({ filters: [{ vendorId: 0x2341 }] })
 * Still can't get the driver working with my own code.
   * Initialize signals (All are digital):
   
-  ![Image](https://github.com/hadrian2/RTI_Dome/blob/main/LED_Test_init.png)
+  ![Image](https://github.com/hadrian2/RTI_Dome/blob/main/Design_Images_and_Code_Sippets/LED_Test_init.png)
   
   * Function to clock in bits from SIN:
 
-  ![Image](https://github.com/hadrian2/RTI_Dome/blob/main/LED_Test_clock.png)
+  ![Image](https://github.com/hadrian2/RTI_Dome/blob/main/Design_Images_and_Code_Sippets/LED_Test_clock.png)
 
   * Function to set bits after being clocked in:
 
-  ![Image](https://github.com/hadrian2/RTI_Dome/blob/main/LED_Test_set.png)
+  ![Image](https://github.com/hadrian2/RTI_Dome/blob/main/Design_Images_and_Code_Sippets/LED_Test_set.png)
 
 * Guessing that I busted the chip at some point because after 4 hours I genuinely don't know what else could be wrong. Calling it a night.
 
@@ -228,14 +228,14 @@ navigator.usb.requestDevice({ filters: [{ vendorId: 0x2341 }] })
 * Not working on code from Tuesday 9th. Looking into the datasheet some more.
 * After looking at the timing chart more closely I learned some things:
   
-  ![Image](https://github.com/hadrian2/RTI_Dome/blob/main/TLC5940_Timing.png)
+  ![Image](https://github.com/hadrian2/RTI_Dome/blob/main/Design_Images_and_Code_Sippets/TLC5940_Timing.png)
   
   * Seems like XLAT should be triggered inside of a high BLANK signal.
   * GSClk looks like I can just have it running at all times.
 
 * With this in considerations, I modified the set() function and changed GSClk to an analog signal with 50% PWM duty cycle.
   
-  ![Image](https://github.com/hadrian2/RTI_Dome/blob/main/LED_Test_set2.png)
+  ![Image](https://github.com/hadrian2/RTI_Dome/blob/main/Design_Images_and_Code_Sippets/LED_Test_set2.png)
   
 * LED now lights up with my code!
 * Continued messing with the LED driver, and I think I broke it...
@@ -245,9 +245,9 @@ navigator.usb.requestDevice({ filters: [{ vendorId: 0x2341 }] })
 ## 11/12/2021: PCB Redesign
 * Now that we actually know what signals we need to control the drivers, we updated our PCB and Schematic to include BLANK and XLAT signals from the micro to the drivers, and hope to get a new set of boards ASAP. Should be here on the 23rd :/
 
-![Image](https://github.com/hadrian2/RTI_Dome/blob/main/Schematic_4.png)
+![Image](https://github.com/hadrian2/RTI_Dome/blob/main/Design_Images_and_Code_Sippets/Schematic_4.png)
 
-![Image](https://github.com/hadrian2/RTI_Dome/blob/main/PCB_Layout_4.png)
+![Image](https://github.com/hadrian2/RTI_Dome/blob/main/Design_Images_and_Code_Sippets/PCB_Layout_4.png)
 
 * Still need to figure out uploading code our micro. Keep getting the error: “selected serial port does not exist or your board is not connected”
 
