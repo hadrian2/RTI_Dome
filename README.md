@@ -16,6 +16,6 @@
 
 ## 9/9/2021: Continued Design Discussion
 * Sketched out umbrella design
-* 
+  ![Image](https://github.com/hadrian2/RTI_Dome/blob/main/Umbrella_Sketch.jpg)
 * Sketched out block diagram
-  
+  ![Image](https://github.com/hadrian2/RTI_Dome/blob/main/First_Block_Sketch.jpg)
