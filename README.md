@@ -195,7 +195,14 @@ navigator.usb.requestDevice({ filters: [{ vendorId: 0x2341 }] })
 
 ## 11/6/2021: Fun with Tkinter
 * I found a [great resource](https://www.geeksforgeeks.org/tkinter-application-to-switch-between-different-page-frames/) on how to create a GUI with multiple pages in Tkinter
-* I took this sample code and adapted it to work with our project
+* I took this sample code and adapted it to work with our project, and was able to create a skeleton of the GUI
+
+![Image](https://github.com/hadrian2/RTI_Dome/blob/main/Design_Images_and_Code_Sippets/GUI_Home_Skeleton.JPG)
+
+![Image](https://github.com/hadrian2/RTI_Dome/blob/main/Design_Images_and_Code_Sippets/GUI_Auto_Skeleton.JPG)
+
+![Image](https://github.com/hadrian2/RTI_Dome/blob/main/Design_Images_and_Code_Sippets/GUI_Manual_Skeleton.JPG)
+
 
 ## 11/9/2021: LED Driver testing
 * Evan provided us with a breakout board for our LED driver so I could test with an Arduino on a breadboard. God bless you Evan.
@@ -249,11 +256,11 @@ navigator.usb.requestDevice({ filters: [{ vendorId: 0x2341 }] })
 
 ![Image](https://github.com/hadrian2/RTI_Dome/blob/main/Design_Images_and_Code_Sippets/PCB_Layout_4.png)
 
-* Still need to figure out uploading code our micro. Keep getting the error: “selected serial port does not exist or your board is not connected”
+* Still need to figure out uploading code our micro through USB. Keep getting the error: “selected serial port does not exist or your board is not connected”
 
 ## 11/19/2021: Microcontroller troubleshooting
-* Still can't get the micro working as of now
-* After searching all over the internet for a solution, we found a random [reddit user's post](https://www.reddit.com/r/arduino/comments/drkoom/solved_atmega32u4_forcing_reset_using_1200bps/) that was having the same problem as us, who found this solution of installing the Arduino Micro bootloader instead of the Leonardo bootloader we had been using on another random forum page. It worked lol.
+* Still can't get the micro programmed through USB.
+* After searching all over the internet for a solution, we found a random [reddit user's post](https://www.reddit.com/r/arduino/comments/drkoom/solved_atmega32u4_forcing_reset_using_1200bps/) that was having the same problem as us, who found this solution of installing the Arduino Micro bootloader instead of the Leonardo bootloader we had been using. It worked lol.
 
 ## 11/22/2021 - 11/29/2021: Spring Break
 
