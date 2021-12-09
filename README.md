@@ -193,8 +193,13 @@ navigator.usb.requestDevice({ filters: [{ vendorId: 0x2341 }] })
 
 ## 11/4/2021: Dome Construction Finished!
 
+## 11/6/2021: Fun with Tkinter
+* I found a [great resource](https://www.geeksforgeeks.org/tkinter-application-to-switch-between-different-page-frames/) on how to create a GUI with multiple pages in Tkinter
+* I took this sample code and adapted it to work with our project
+
 ## 11/9/2021: LED Driver testing
 * Evan provided us with a breakout board for our LED driver so I could test with an Arduino on a breadboard. God bless you Evan.
+* Jack working on wiring the dome
 * Found an Arduino library for controlling our specific driver. Trying to get an LED to light up using this driver using [this](https://playground.arduino.cc/Learning/TLC5940/) reference.
 * Tried using given library functions to turn on and off LEDs to no avail. Referring back to the [TLC5940 Datasheet](https://www.ti.com/product/TLC5940?utm_source=google&utm_medium=cpc&utm_campaign=app-led-null-prodfolderdynamic-cpc-pf-google-wwe&utm_content=prodfolddynamic&ds_k=DYNAMIC+SEARCH+ADS&DCM=yes&gclid=CjwKCAiA78aNBhAlEiwA7B76p3s54ISAGRmD_Q9z8pcWMUK1mUTM8qzrQvB5o3cjqEsktUIdCyhSQRoC2y8QAvD_BwE&gclsrc=aw.ds) to see if I can get the driver working using my own code. 
 * Necessary signals (i think):
@@ -236,6 +241,21 @@ navigator.usb.requestDevice({ filters: [{ vendorId: 0x2341 }] })
 * Continued messing with the LED driver, and I think I broke it...
 * To add insult to injury, when trying to solder on a new driver to the breakout board, I ripped one of the traces of the board...
 * Still happy with today's results though.
+
+## 11/12/2021: PCB Redesign
+* Now that we actually know what signals we need to control the drivers, we updated our PCB and Schematic to include BLANK and XLAT signals from the micro to the drivers, and hope to get a new set of boards ASAP. Should be here on the 23rd :/
+
+![Image](https://github.com/hadrian2/RTI_Dome/blob/main/Schematic_4.png)
+
+![Image](https://github.com/hadrian2/RTI_Dome/blob/main/PCB_Layout_4.png)
+
+* Still need to figure out uploading code our micro. Keep getting the error: “selected serial port does not exist or your board is not connected”
+
+## 11/19/2021: Microcontroller troubleshooting
+* Still can't get the micro working as of now
+* After searching all over the internet for a solution, we found a random [reddit user's post](https://www.reddit.com/r/arduino/comments/drkoom/solved_atmega32u4_forcing_reset_using_1200bps/) that was having the same problem as us, who found this solution of installing the Arduino Micro bootloader instead of the Leonardo bootloader we had been using on another random forum page. It worked lol.
+
+## 11/22/2021 - 11/29/2021: Spring Break
 
 
 
