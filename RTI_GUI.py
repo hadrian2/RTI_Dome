@@ -4,11 +4,9 @@ import serial.tools.list_ports as st
 plist = list(st.comports())
 port = None
 for i in plist:
-    print(i)
     if i.vid == 9025:
         port = i.device
         device = "Connected!"
-        print(device)
 
 if port == None:
     device = "Not Found :("
@@ -39,8 +37,6 @@ class Home(tk.Frame): #Home page
                   command=lambda: master.switch_frame(Auto)).pack(padx = 100)
         tk.Button(self, text="Manual Imaging", height = 3, width = 20,
                   command=lambda: master.switch_frame(Manual)).pack(padx = 100)
-        #tk.Button(self, text="Configuration", height = 3, width = 20,
-                  #command=lambda: master.switch_frame(Config)).pack(padx = 100,pady=(0,100))
         botFrame = tk.Frame(self, bg = "white" , borderwidth = 2, relief = 'sunken')
         botFrame.pack(padx = 10, pady = 10)
         tk.Label(botFrame, text= "Device: %s"%device, fg = 'black', bg = 'white' ,font = ("Roboto", 8)).pack(side="top", fill="x", pady=30)
@@ -58,7 +54,6 @@ class Auto(tk.Frame): #Automatic Imaging page
                 command=lambda:[cereal.write("A".encode()), master.switch_frame(Wait)]).pack(side = 'left',padx = 100,pady=50)
         tk.Button(botAFrame, text="Back", height = 2, width = 10,
                 command=lambda: master.switch_frame(Home)).pack(side = 'bottom')
-#[cereal.write("A".encode()), master.switch_frame(Wait)])#
 
 class Manual(tk.Frame): #Manual page
     def __init__(self, master):
