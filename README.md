@@ -97,7 +97,22 @@
 * Looked into the new Micro datasheet to see what she could do
 * Schematic and Board updates
 
-![Image](
+![Image](https://github.com/hadrian2/RTI_Dome/blob/main/Schematic_Rework.png)
+
+![Image](https://github.com/hadrian2/RTI_Dome/blob/main/PCB_Layout_2.png)
+
+## 10/5/2021: Design Review
+* Updated R/V Table
+
+## 10/6/2021: Final PCB Revisions
+* Dotted i's and crossed t's on tha schematic and PCB layout. Ready to order (hopefully)
+
+![Image](https://github.com/hadrian2/RTI_Dome/blob/main/Schematic_3.png
+
+![Image](https://github.com/hadrian2/RTI_Dome/blob/main/PCB_Layout_3.png
+
+
+
 
 
 
