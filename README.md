@@ -1,4 +1,4 @@
-## Below is the documentation of my Senior Design Project. This project was sponsored by the Spurlock Museum in Urbana, Illinois. This documentation details the design process of a Reflectance Transformation Imaging (RTI) Dome that is currently in use by the Spurlock Museum today. ##
+## Below is the documentation of my Senior Design Project. This project was sponsored by the Spurlock Museum in Urbana, Illinois. This documentation details the design process of a Reflectance Transformation Imaging (RTI) Dome that is still in use by the Spurlock Museum today. ##
 
 # **Hadrian Doromal Worklog**
 
